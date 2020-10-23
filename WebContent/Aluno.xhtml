@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h= "http://xmlns.jcp.org/jsf/html"
+xmlns:f= "http://xmlns.jcp.org/jsf/core">
+
+<h:head></h:head>
+
+<h:body>
+<h:form>
+<fieldset> 
+<legend>Novo Aluno</legend>
+<h:panelGrid columns="2">
+	<h:outputText value = "Nome" for="idNome" />
+	<h:inputText id="idNome" value ="#{alunoController.aluno.nome}"
+		required="true">
+	</h:inputText>
+	<h:outputText value = "CPF" for="idCpf" />
+	<h:inputText id="idCpf" value ="#{alunoController.aluno.CPF}"
+		required="true">
+	<f:validateLength minimun ="11" maximum="11" />
+	</h:inputText>
+	<h:outputText value = "telefone" for="idTelefone" />
+	<h:inputText id="idTelefone" value ="#{alunoController.aluno.telefone}">
+	<f:validateLength minimun ="10" maximum="11" />
+	</h:inputText>
+	<h:outputText value = "Email" for="idEmail" />
+	<h:inputText id="idEmail" value ="#{alunoController.aluno.email}"/>
+	
+	<h:outputText value= "Escola" for="escola"/>
+	<h:selectOneMenu id = "escola" value="#{alunoController.idEscola}">
+		<f:selectItem itemLabel = "Selecionar" noSelectionOption="true"/>
+		<f:selectItems value ="#{alunoController.todasEscolas}"	var ="school" itemLabel="#{school.nomeEscola}"
+		itemValue="#{school.idEscola}" />
+	</h:selectOneMenu>
+	
+	<h:commandButton value="Salvar" action="#{alunoController.salvar}"/>
+	<h:commandButton value="Cancelar" action="#{alunoController.cancelar}"/>
+</h:panelGrid>
+</fieldset>
+</h:form>
+<h:form>
+	<h:dataTable value="#{alunoController.todosAlunos}" var="alun"  >
+		<h:column>
+		<f:facet name="header">Nome    </f:facet>
+			<h:outputText value="#{alun.nome}"/>
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">CPF    </f:facet>
+			<h:outputText value="#{alun.CPF}"/>
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">Telefone    </f:facet>
+			<h:outputText value="#{alun.telefone}"/>
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">Escola    </f:facet>
+			<h:outputText value="#{alun.escola.nomeEscola}"/>
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">Alterar    </f:facet>
+			<h:commandLink value="altera" action="#{alunoController.carregar(alun)}"/>
+		</h:column>
+		
+		<h:column>
+		<f:facet name="header">Remover</f:facet>
+		<h:commandLink value="remove" action="#{alunoController.remover(alun)}"/>
+		</h:column>
+		
+	</h:dataTable>
+</h:form>
+</h:body>
+</html>
